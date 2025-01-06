@@ -1,4 +1,3 @@
-import React from 'react';
 import { BASE_SCORES } from '../constants/scoring';
 import { Level } from '../types/game';
 

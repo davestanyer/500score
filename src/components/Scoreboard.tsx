@@ -1,17 +1,14 @@
-import React from 'react';
 import { Trophy } from 'lucide-react';
-import { Team, Round } from '../types/game';
-import RoundHistory from './RoundHistory';
+import { Team } from '../types/game';
 import { teamName } from '../utils/scoring';
 
 interface ScoreboardProps {
   teams: Team[];
-  rounds: Round[];
   gameOver: boolean;
   winningTeam: number;
 }
 
-export default function Scoreboard({ teams, rounds, gameOver, winningTeam }: ScoreboardProps) {
+export default function Scoreboard({ teams, gameOver, winningTeam }: ScoreboardProps) {
   return (
     <div className="space-y-6">
       {/* Team Scores */}
@@ -52,11 +49,6 @@ export default function Scoreboard({ teams, rounds, gameOver, winningTeam }: Sco
           </div>
         ))}
       </div>
-
-      {/* Round History */}
-      {rounds.length > 0 && (
-        <RoundHistory rounds={rounds} teams={teams} />
-      )}
     </div>
   );
 }

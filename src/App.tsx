@@ -6,6 +6,7 @@ import ScoringTable from './components/ScoringTable';
 import Header from './components/Header';
 import { Team, Round, Bid } from './types/game';
 import { calculateRoundScore, isGameOver } from './utils/scoring';
+import RoundHistory from './components/RoundHistory';
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -94,7 +95,6 @@ export default function App() {
             <div className="space-y-6">
               <Scoreboard
                 teams={teams}
-                rounds={rounds}
                 gameOver={gameOver}
                 winningTeam={winningTeam}
               />
@@ -102,6 +102,9 @@ export default function App() {
                 <BidInput teams={teams} onBidSubmit={handleBidSubmit} disabled={gameOver} />
                 <ScoringTable />
               </div>
+              {rounds.length > 0 && (
+                <RoundHistory rounds={rounds} teams={teams} />
+              )}
             </div>
           </div>
         )}
