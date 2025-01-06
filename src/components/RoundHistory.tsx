@@ -1,5 +1,6 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Round, Team } from '../types/game';
+import { teamName } from '../utils/scoring';
 
 interface RoundHistoryProps {
   rounds: Round[];
@@ -31,7 +32,7 @@ const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-gray-700">{biddingTeam.name}</p>
+                  <p className="font-medium text-gray-700">{teamName(biddingTeam)}</p>
                   <p className="text-sm">
                     Bid: {round.bid.level} {round.bid.suit}
                   </p>
@@ -43,9 +44,9 @@ const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
                 </div>
                 
                 <div>
-                  <p className="font-medium text-gray-700">{nonBiddingTeam.name}</p>
+                  <p className="font-medium text-gray-700">{teamName(nonBiddingTeam)}</p>
                   <p className="text-sm">
-                    Tricks: {round.bid.oppositionHands}
+                    Tricks: {10 - round.bid.tricksWon}
                   </p>
                   <p className="font-medium text-green-600">
                     +{round.nonBiddingTeamScore}

@@ -13,18 +13,16 @@ export default function BidInput({ teams, onBidSubmit, disabled }: BidInputProps
   const [level, setLevel] = useState<Level | null>(6);
   const [suit, setSuit] = useState<Suit>('Spades');
   const [team, setTeam] = useState<Team>(teams[0]);
-  const [made, setMade] = useState<boolean>(true);
-  const [oppositionHands, setOppositionHands] = useState<number>(0);
+  const [tricksWon, setTricksWon] = useState<number>(0);
 
   const LEVELS: Level[] = [6, 7, 8, 9, 10];
   const SUITS: Suit[] = ['Spades', 'Clubs', 'Diamonds', 'Hearts', 'No-Trump', 'Misere', 'Open Misere'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onBidSubmit({ level, suit, team, made, oppositionHands });
+    onBidSubmit({ level, suit, team, tricksWon });
     // Reset form after submission
-    setOppositionHands(0);
-    setMade(true);
+    setTricksWon(0);
   };
 
   return (
@@ -111,44 +109,21 @@ export default function BidInput({ teams, onBidSubmit, disabled }: BidInputProps
               ))}
             </div>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Outcome
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {[true, false].map((value) => (
-                <button
-                  key={value.toString()}
-                  type="button"
-                  onClick={() => setMade(value)}
-                  disabled={disabled}
-                  className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                    made === value
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  {value ? 'Made' : 'Failed'}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Opposition Tricks Won
+            Tricks Won
           </label>
           <div className="grid grid-cols-6 gap-2">
             {Array.from({ length: 11 }, (_, i) => (
               <button
                 key={i}
                 type="button"
-                onClick={() => setOppositionHands(i)}
+                onClick={() => setTricksWon(i)}
                 disabled={disabled}
                 className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                  oppositionHands === i
+                  tricksWon === i
                     ? 'bg-indigo-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -158,7 +133,7 @@ export default function BidInput({ teams, onBidSubmit, disabled }: BidInputProps
             ))}
           </div>
           <p className="mt-2 text-sm text-gray-500">
-            Points for non-bidding team: {oppositionHands * 10}
+            Points for non-bidding team: {(10 - tricksWon) * 10}
           </p>
         </div>
       </div>

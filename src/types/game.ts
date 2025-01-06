@@ -12,8 +12,7 @@ export interface Bid {
   level: Level | null;
   suit: Suit;
   team: Team;
-  made: boolean;
-  oppositionHands: number;
+  tricksWon: number;
 }
 
 export interface Round {
