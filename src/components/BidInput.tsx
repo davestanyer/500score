@@ -133,7 +133,7 @@ export default function BidInput({ teams, onBidSubmit, disabled }: BidInputProps
             ))}
           </div>
           <p className="mt-2 text-sm text-gray-500">
-            Points for non-bidding team: {(10 - tricksWon) * 10}
+            Points for non-bidding team: { level ? (10 - tricksWon) * 10 : 0}
           </p>
         </div>
       </div>

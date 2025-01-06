@@ -29,8 +29,8 @@ export const calculateBidPoints = (level: Level | null, suit: Suit): number => {
 
 export const calculateRoundScore = (bid: Bid): [number, number] => {
   const bidPoints = calculateBidPoints(bid.level, bid.suit);
-  const oppositionPoints = (10 - bid.tricksWon) * OPPOSITION_HAND_POINTS;
-  const level = bid.level || 6;
+  const oppositionPoints = bid.level ? (10 - bid.tricksWon) * OPPOSITION_HAND_POINTS : 0;
+  const level = bid.level || 0;
   // Calculate bidding team's score
   const biddingTeamScore = (bid.tricksWon >= level) ? bidPoints - oppositionPoints : -bidPoints;
   
