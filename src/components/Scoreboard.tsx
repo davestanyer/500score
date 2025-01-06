@@ -2,6 +2,7 @@ import React from 'react';
 import { Trophy } from 'lucide-react';
 import { Team, Round } from '../types/game';
 import RoundHistory from './RoundHistory';
+import { teamName } from '../utils/scoring';
 
 interface ScoreboardProps {
   teams: Team[];
@@ -27,7 +28,7 @@ export default function Scoreboard({ teams, rounds, gameOver, winningTeam }: Sco
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">{team.icon}</span>
-                <h3 className="text-lg font-bold">{team.name}</h3>
+                <h3 className="text-lg font-bold">{teamName(team)}</h3>
               </div>
               {gameOver && team.id === winningTeam && (
                 <Trophy className="w-6 h-6 text-yellow-500" />

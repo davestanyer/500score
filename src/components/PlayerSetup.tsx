@@ -11,7 +11,6 @@ interface PlayerSetupProps {
 export default function PlayerSetup({ onComplete }: PlayerSetupProps) {
   const [playerCount, setPlayerCount] = useState<4 | 6>(4);
   const [players, setPlayers] = useState<string[]>(Array(playerCount).fill(''));
-  const [teamNames, setTeamNames] = useState(['Team 1', 'Team 2']);
   const [teamIcons, setTeamIcons] = useState([TEAM_ICONS[0].emoji, TEAM_ICONS[1].emoji]);
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -22,7 +21,6 @@ export default function PlayerSetup({ onComplete }: PlayerSetupProps) {
     for (let i = 0; i < 2; i++) {
       teams.push({
         id: i,
-        name: teamNames[i],
         icon: teamIcons[i],
         score: 0,
         players: players.slice(i * playersPerTeam, (i + 1) * playersPerTeam)
@@ -32,12 +30,7 @@ export default function PlayerSetup({ onComplete }: PlayerSetupProps) {
     onComplete(teams);
   };
 
-  const handleTeamUpdate = (teamIndex: number, name: string, icon: string) => {
-    setTeamNames(prev => {
-      const updated = [...prev];
-      updated[teamIndex] = name;
-      return updated;
-    });
+  const handleTeamUpdate = (teamIndex: number, icon: string) => {
     setTeamIcons(prev => {
       const updated = [...prev];
       updated[teamIndex] = icon;
@@ -82,8 +75,7 @@ export default function PlayerSetup({ onComplete }: PlayerSetupProps) {
             <h3 className="text-lg font-medium text-gray-800 mb-4">Team {teamIndex + 1}</h3>
             <TeamSetup
               teamId={teamIndex}
-              defaultName={teamNames[teamIndex]}
-              onUpdate={(name, icon) => handleTeamUpdate(teamIndex, name, icon)}
+              onUpdate={(icon) => handleTeamUpdate(teamIndex, icon)}
             />
             <div className="mt-4 space-y-4">
               {players

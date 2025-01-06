@@ -55,7 +55,7 @@ export default function App() {
     // Update teams with new scores
     const updatedTeams = teams.map((team, idx) => ({
       ...team,
-      score: team.score + (idx === bid.team ? biddingTeamScore : nonBiddingTeamScore)
+      score: team.score + (idx === bid.team.id ? biddingTeamScore : nonBiddingTeamScore)
     }));
 
     setRounds([...rounds, newRound]);
@@ -99,7 +99,7 @@ export default function App() {
                 winningTeam={winningTeam}
               />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <BidInput onBidSubmit={handleBidSubmit} disabled={gameOver} />
+                <BidInput teams={teams} onBidSubmit={handleBidSubmit} disabled={gameOver} />
                 <ScoringTable />
               </div>
             </div>

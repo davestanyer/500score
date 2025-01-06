@@ -14,8 +14,8 @@ const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
       <h3 className="text-lg font-semibold mb-4">Round History</h3>
       <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
         {rounds.map((round, index) => {
-          const biddingTeam = teams[round.bid.team];
-          const nonBiddingTeam = teams[round.bid.team === 0 ? 1 : 0];
+          const biddingTeam = teams[round.bid.team.id];
+          const nonBiddingTeam = teams[round.bid.team.id === 0 ? 1 : 0];
           
           return (
             <div 

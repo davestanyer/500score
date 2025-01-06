@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { PlayCircle } from 'lucide-react';
-import { Bid, Level, Suit } from '../types/game';
+import { Bid, Level, Suit, Team } from '../types/game';
+import { teamName } from '../utils/scoring';
 
 interface BidInputProps {
+  teams: Team[];
   onBidSubmit: (bid: Bid) => void;
   disabled: boolean;
 }
 
-export default function BidInput({ onBidSubmit, disabled }: BidInputProps) {
+export default function BidInput({ teams, onBidSubmit, disabled }: BidInputProps) {
   const [level, setLevel] = useState<Level | null>(6);
   const [suit, setSuit] = useState<Suit>('Spades');
-  const [team, setTeam] = useState<number>(0);
+  const [team, setTeam] = useState<Team>(teams[0]);
   const [made, setMade] = useState<boolean>(true);
   const [oppositionHands, setOppositionHands] = useState<number>(0);
 
@@ -92,9 +94,9 @@ export default function BidInput({ onBidSubmit, disabled }: BidInputProps) {
               Bidding Team
             </label>
             <div className="grid grid-cols-2 gap-2">
-              {[0, 1].map((t) => (
+              {teams.map((t) => (
                 <button
-                  key={t}
+                  key={t.id}
                   type="button"
                   onClick={() => setTeam(t)}
                   disabled={disabled}
@@ -104,7 +106,7 @@ export default function BidInput({ onBidSubmit, disabled }: BidInputProps) {
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  Team {t + 1}
+                  {teamName(t)}
                 </button>
               ))}
             </div>

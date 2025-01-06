@@ -1,4 +1,4 @@
-import { Bid, Level, Suit } from '../types/game';
+import { Bid, Level, Suit, Team } from '../types/game';
 
 const BASE_SCORES: Record<Suit, number> = {
   'Spades': 40,
@@ -11,6 +11,10 @@ const BASE_SCORES: Record<Suit, number> = {
 };
 
 const OPPOSITION_HAND_POINTS = 10;
+
+export const teamName = (team: Team) => {
+  return team.players.join(' & ');
+}
 
 export const calculateBidPoints = (level: Level | null, suit: Suit): number => {
   if (suit === 'Misere' || suit === 'Open Misere') {

@@ -3,7 +3,6 @@ export type Level = 6 | 7 | 8 | 9 | 10;
 
 export interface Team {
   id: number;
-  name: string;
   icon: string;
   score: number;
   players: string[];
@@ -12,7 +11,7 @@ export interface Team {
 export interface Bid {
   level: Level | null;
   suit: Suit;
-  team: number;
+  team: Team;
   made: boolean;
   oppositionHands: number;
 }
