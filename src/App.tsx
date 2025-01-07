@@ -103,6 +103,31 @@ export default function App() {
     setWinningTeam(-1);
   };
 
+  const onDeleteRound = (round: Round) => {
+    const updatedRounds = rounds.filter((r) => r.id !== round.id);
+
+    // Recalculate scores
+    const updatedTeams = teams.map((team) => {
+      let score = 0;
+      updatedRounds.forEach((r) => {
+        if (r.bid.team.id === team.id) {
+          score += r.biddingTeamScore;
+        } else {
+          score += r.nonBiddingTeamScore;
+        }
+      });
+
+      return { ...team, score };
+    });
+
+    setRounds(updatedRounds);
+    setTeams(updatedTeams);
+
+    const [isOver, winner] = isGameOver(updatedTeams.map((t) => t.score));
+    setGameOver(isOver);
+    setWinningTeam(winner);
+  };
+
   return (
     <div
       className={`min-h-screen ${darkMode ? "dark bg-gray-900" : "bg-gray-100"}`}
@@ -134,7 +159,11 @@ export default function App() {
                 <ScoringTable />
               </div>
               {rounds.length > 0 && (
-                <RoundHistory rounds={rounds} teams={teams} />
+                <RoundHistory
+                  rounds={rounds}
+                  teams={teams}
+                  onDelete={onDeleteRound}
+                />
               )}
             </div>
           </div>

@@ -5,9 +5,10 @@ import { teamName } from '../utils/scoring';
 interface RoundHistoryProps {
   rounds: Round[];
   teams: Team[];
+  onDelete: (round: Round) => void;
 }
 
-const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
+const RoundHistory = memo(({ rounds, teams, onDelete }: RoundHistoryProps) => {
   if (rounds.length === 0) return null;
 
   return (
@@ -17,7 +18,7 @@ const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
         {rounds.map((round, index) => {
           const biddingTeam = teams[round.bid.team.id];
           const nonBiddingTeam = teams[round.bid.team.id === 0 ? 1 : 0];
-          
+
           return (
             <div 
               key={round.id}
@@ -29,7 +30,7 @@ const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
                   {new Date(round.timestamp).toLocaleTimeString()}
                 </span>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-gray-700">{teamName(biddingTeam)}</p>
@@ -42,7 +43,7 @@ const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
                     {round.biddingTeamScore > 0 ? '+' : ''}{round.biddingTeamScore}
                   </p>
                 </div>
-                
+
                 <div>
                   <p className="font-medium text-gray-700">{teamName(nonBiddingTeam)}</p>
                   <p className="text-sm">
@@ -53,6 +54,14 @@ const RoundHistory = memo(({ rounds, teams }: RoundHistoryProps) => {
                   </p>
                 </div>
               </div>
+
+              {/* Delete Button */}
+              <button
+                onClick={() => onDelete(round)}
+                className="mt-2 px-3 py-1 text-sm bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition"
+              >
+                Delete
+              </button>
             </div>
           );
         }).reverse()}
