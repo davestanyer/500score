@@ -32,7 +32,7 @@ export const calculateRoundScore = (bid: Bid): [number, number] => {
   const oppositionPoints = bid.level ? (10 - bid.tricksWon) * OPPOSITION_HAND_POINTS : 0;
   const level = bid.level || 0;
   // Calculate bidding team's score
-  const biddingTeamScore = (bid.tricksWon >= level) ? bidPoints - oppositionPoints : -bidPoints;
+  const biddingTeamScore = (bid.tricksWon >= level) ? bidPoints : -bidPoints;
   
   // Calculate non-bidding team's score (they always get points for tricks)
   const nonBiddingTeamScore = oppositionPoints;
