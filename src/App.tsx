@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import PlayerSetup from './components/PlayerSetup';
-import Scoreboard from './components/Scoreboard';
-import BidInput from './components/BidInput';
-import ScoringTable from './components/ScoringTable';
-import Header from './components/Header';
-import { Team, Round, Bid } from './types/game';
-import { calculateRoundScore, isGameOver } from './utils/scoring';
-import RoundHistory from './components/RoundHistory';
+import React, { useState, useEffect } from "react";
+import PlayerSetup from "./components/PlayerSetup";
+import Scoreboard from "./components/Scoreboard";
+import BidInput from "./components/BidInput";
+import ScoringTable from "./components/ScoringTable";
+import Header from "./components/Header";
+import { Team, Round, Bid } from "./types/game";
+import { calculateRoundScore, isGameOver } from "./utils/scoring";
+import RoundHistory from "./components/RoundHistory";
 
 // Assume these are the expected schema versions or some checksum
 const CURRENT_SCHEMA_VERSION = "2.0";
@@ -42,7 +42,10 @@ export default function App() {
           localStorage.removeItem("500-game-state");
         }
       } catch (error) {
-        console.error("Failed to parse saved state. Clearing invalid data.", error);
+        console.error(
+          "Failed to parse saved state. Clearing invalid data.",
+          error
+        );
         localStorage.removeItem("500-game-state");
       }
     }
@@ -51,7 +54,10 @@ export default function App() {
   useEffect(() => {
     // Save game state to localStorage
     if (gameStarted) {
-      localStorage.setItem('500-game-state', JSON.stringify({ schemaVersion: CURRENT_SCHEMA_VERSION, teams, rounds }));
+      localStorage.setItem(
+        "500-game-state",
+        JSON.stringify({ schemaVersion: CURRENT_SCHEMA_VERSION, teams, rounds })
+      );
     }
   }, [teams, rounds, gameStarted]);
 
@@ -67,19 +73,21 @@ export default function App() {
       bid,
       timestamp: Date.now(),
       biddingTeamScore,
-      nonBiddingTeamScore
+      nonBiddingTeamScore,
     };
 
     // Update teams with new scores
     const updatedTeams = teams.map((team, idx) => ({
       ...team,
-      score: team.score + (idx === bid.team.id ? biddingTeamScore : nonBiddingTeamScore)
+      score:
+        team.score +
+        (idx === bid.team.id ? biddingTeamScore : nonBiddingTeamScore),
     }));
 
     setRounds([...rounds, newRound]);
     setTeams(updatedTeams);
 
-    const [isOver, winner] = isGameOver(updatedTeams.map(t => t.score));
+    const [isOver, winner] = isGameOver(updatedTeams.map((t) => t.score));
     if (isOver) {
       setGameOver(true);
       setWinningTeam(winner);
@@ -87,7 +95,7 @@ export default function App() {
   };
 
   const handleReset = () => {
-    localStorage.removeItem('500-game-state');
+    localStorage.removeItem("500-game-state");
     setTeams([]);
     setRounds([]);
     setGameStarted(false);
@@ -96,9 +104,11 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
+    <div
+      className={`min-h-screen ${darkMode ? "dark bg-gray-900" : "bg-gray-100"}`}
+    >
       <div className="container mx-auto px-4 py-8">
-        <Header 
+        <Header
           darkMode={darkMode}
           setDarkMode={setDarkMode}
           gameStarted={gameStarted}
@@ -116,7 +126,11 @@ export default function App() {
                 winningTeam={winningTeam}
               />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <BidInput teams={teams} onBidSubmit={handleBidSubmit} disabled={gameOver} />
+                <BidInput
+                  teams={teams}
+                  onBidSubmit={handleBidSubmit}
+                  disabled={gameOver}
+                />
                 <ScoringTable />
               </div>
               {rounds.length > 0 && (
