@@ -8,6 +8,9 @@ import { Team, Round, Bid } from './types/game';
 import { calculateRoundScore, isGameOver } from './utils/scoring';
 import RoundHistory from './components/RoundHistory';
 
+// Assume these are the expected schema versions or some checksum
+const CURRENT_SCHEMA_VERSION = "2.0";
+
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
@@ -18,23 +21,37 @@ export default function App() {
 
   useEffect(() => {
     // Load game state from localStorage
-    const savedState = localStorage.getItem('500-game-state');
+    const savedState = localStorage.getItem("500-game-state");
     if (savedState) {
-      const { teams: savedTeams, rounds: savedRounds } = JSON.parse(savedState);
-      setTeams(savedTeams);
-      setRounds(savedRounds);
-      setGameStarted(true);
-      
-      const [isOver, winner] = isGameOver(savedTeams.map(t => t.score));
-      setGameOver(isOver);
-      setWinningTeam(winner);
+      try {
+        const parsedState = JSON.parse(savedState);
+
+        // Check if the schema version matches
+        if (parsedState.schemaVersion === CURRENT_SCHEMA_VERSION) {
+          const { teams: savedTeams, rounds: savedRounds } = parsedState;
+
+          setTeams(savedTeams);
+          setRounds(savedRounds);
+          setGameStarted(true);
+
+          const [isOver, winner] = isGameOver(savedTeams.map((t) => t.score));
+          setGameOver(isOver);
+          setWinningTeam(winner);
+        } else {
+          console.warn("Schema version mismatch. Clearing invalid data.");
+          localStorage.removeItem("500-game-state");
+        }
+      } catch (error) {
+        console.error("Failed to parse saved state. Clearing invalid data.", error);
+        localStorage.removeItem("500-game-state");
+      }
     }
   }, []);
 
   useEffect(() => {
     // Save game state to localStorage
     if (gameStarted) {
-      localStorage.setItem('500-game-state', JSON.stringify({ teams, rounds }));
+      localStorage.setItem('500-game-state', JSON.stringify({ schemaVersion: CURRENT_SCHEMA_VERSION, teams, rounds }));
     }
   }, [teams, rounds, gameStarted]);
 
