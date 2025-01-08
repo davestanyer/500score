@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import { Team, Round, Bid } from "./types/game";
 import { calculateRoundScore, isGameOver } from "./utils/scoring";
 import RoundHistory from "./components/RoundHistory";
+import { v4 as uuidv4 } from "uuid";
 
 // Assume these are the expected schema versions or some checksum
 const CURRENT_SCHEMA_VERSION = "2.0";
@@ -69,7 +70,7 @@ export default function App() {
   const handleBidSubmit = (bid: Bid) => {
     const [biddingTeamScore, nonBiddingTeamScore] = calculateRoundScore(bid);
     const newRound: Round = {
-      id: rounds.length,
+      id: uuidv4(),
       bid,
       timestamp: Date.now(),
       biddingTeamScore,

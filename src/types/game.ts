@@ -1,4 +1,11 @@
-export type Suit = 'Spades' | 'Hearts' | 'Diamonds' | 'Clubs' | 'No-Trump' | 'Misere' | 'Open Misere';
+export type Suit =
+  | "Spades"
+  | "Hearts"
+  | "Diamonds"
+  | "Clubs"
+  | "No-Trump"
+  | "Misere"
+  | "Open Misere";
 export type Level = 6 | 7 | 8 | 9 | 10;
 
 export interface Team {
@@ -16,7 +23,7 @@ export interface Bid {
 }
 
 export interface Round {
-  id: number;
+  id: string;
   bid: Bid;
   timestamp: number;
   biddingTeamScore: number;
