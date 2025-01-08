@@ -2,9 +2,9 @@ import { Bid, Level, Suit, Team } from "../types/game";
 
 const BASE_SCORES: Record<Suit, number> = {
   Spades: 40,
-  Hearts: 60,
+  Clubs: 60,
   Diamonds: 80,
-  Clubs: 100,
+  Hearts: 100,
   "No-Trump": 120,
   Misere: 250,
   "Open Misere": 500,
