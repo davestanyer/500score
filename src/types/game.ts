@@ -1,8 +1,8 @@
 export type Suit =
-  | "Spades"
-  | "Hearts"
-  | "Diamonds"
-  | "Clubs"
+  | "♠️"
+  | "♥️"
+  | "♦️"
+  | "♣️"
   | "No-Trump"
   | "Misere"
   | "Open Misere";

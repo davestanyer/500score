@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Images directory
+/imgs
+
+# Claude Code settings
+.claude/
